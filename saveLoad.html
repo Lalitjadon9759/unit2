@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      max-width: 600px;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 1rem;
+    }
+    button {
+      margin-right: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Notes</h1>
+  <textarea id="noteArea" placeholder="Enter your notes here..."></textarea>
+  <br>
+  <button onclick="saveNotes()">Save Notes</button>
+  <button onclick="loadNotes()">Load Notes</button>
+  <button onclick="clearNotes()">Clear Notes</button>
+
+  <script>
+    const noteKey = 'userNotes';
+
+    // Load notes on page load
+    window.onload = function() {
+      loadNotes();
+    }
+
+    function saveNotes() {
+      const noteArea = document.getElementById('noteArea');
+      const notes = noteArea.value.trim();
+      if (notes === '') {
+        alert('Cannot save empty notes.');
+        return;
+      }
+      localStorage.setItem(noteKey, notes);
+      alert('Notes saved successfully.');
+    }
+
+    function loadNotes() {
+      const savedNotes = localStorage.getItem(noteKey);
+      const noteArea = document.getElementById('noteArea');
+      if (savedNotes) {
+        noteArea.value = savedNotes;
+      } else {
+        noteArea.value = '';
+      }
+    }
+
+    function clearNotes() {
+      localStorage.removeItem(noteKey);
+      document.getElementById('noteArea').value = '';
+      alert('Notes cleared.');
+    }
+  </script>
+</body>
+</html>

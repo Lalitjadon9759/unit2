@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Item Click Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #container {
+      padding: 20px;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      padding: 10px;
+      background-color: #f0f0f0;
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+    li:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <ul id="list">
+    <li id="item1">Item 1</li>
+    <li id="item2">Item 2</li>
+    <li id="item3">Item 3</li>
+  </ul>
+</div>
+
+<script>
+  document.getElementById("item2").addEventListener("click", function () {
+    const item = this;
+    const parent = item.parentNode;
+    const prevSibling = item.previousElementSibling;
+    const nextSibling = item.nextElementSibling;
+
+    // Alert the text content of the parent <ul>
+    alert(parent.textContent.trim());
+
+    // Log the text content of previous and next <li> siblings
+    if (prevSibling) {
+      console.log("Previous sibling:", prevSibling.textContent.trim());
+    } else {
+      console.log("No previous sibling");
+    }
+
+    if (nextSibling) {
+      console.log("Next sibling:", nextSibling.textContent.trim());
+    } else {
+      console.log("No next sibling");
+    }
+  });
+</script>
+
+</body>
+</html>

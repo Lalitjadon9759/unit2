@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fakestore Products Grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .product-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+      max-width: 100%;
+      max-height: 150px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+    .product-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-align: center;
+      min-height: 40px; /* To keep consistent height */
+    }
+    .product-price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+    /* Conditional borders */
+    .price-over-50 {
+      border: 3px solid #f7e542; /* yellow */
+    }
+    .price-50-or-less {
+      border: 3px solid #4CAF50; /* green */
+    }
+  </style>
+</head>
+<body>
+  <h1>Fakestore Products</h1>
+  <div class="grid-container" id="productsGrid"></div>
+
+  <script>
+    fetch('https://fakestoreapi.com/products')
+      .then(response => response.json())
+      .then(products => {
+        const grid = document.getElementById('productsGrid');
+        products.forEach(product => {
+          const card = document.createElement('div');
+          card.classList.add('product-card');
+
+          // Add conditional border class
+          if (product.price > 50) {
+            card.classList.add('price-over-50');
+          } else {
+            card.classList.add('price-50-or-less');
+          }
+
+          // Create image element
+          const img = document.createElement('img');
+          img.src = product.image;
+          img.alt = product.title;
+
+          // Create title element
+          const title = document.createElement('div');
+          title.classList.add('product-title');
+          title.textContent = product.title;
+
+          // Create price element
+          const price = document.createElement('div');
+          price.classList.add('product-price');
+          price.textContent = `$${product.price.toFixed(2)}`;
+
+          // Append elements to card
+          card.appendChild(img);
+          card.appendChild(title);
+          card.appendChild(price);
+
+          // Append card to grid
+          grid.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+        const grid = document.getElementById('productsGrid');
+        grid.textContent = 'Failed to load products.';
+      });
+  </script>
+</body>
+</html>

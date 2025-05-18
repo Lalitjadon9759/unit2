@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic List</title>
+  <style>
+    .odd {
+      font-weight: bold;
+      color: blue;
+    }
+    .even {
+      font-style: italic;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <ul id="itemList">
+    <li class="odd">Item 1</li>
+    <li class="even">Item 2</li>
+    <li class="odd">Item 3</li>
+  </ul>
+
+  <button id="addButton">Add Item</button>
+
+  <script>
+    const ul = document.querySelector('#itemList');
+    const button = document.querySelector('#addButton');
+
+    button.addEventListener('click', () => {
+      const newItem = document.createElement('li');
+      const itemCount = ul.children.length + 1;
+
+      newItem.textContent = `New Item ${itemCount}`;
+
+      // Apply class based on position
+      if (itemCount % 2 === 0) {
+        newItem.classList.add('even');
+      } else {
+        newItem.classList.add('odd');
+      }
+
+      ul.appendChild(newItem);
+    });
+  </script>
+
+</body>
+</html>

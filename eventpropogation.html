@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Propagation Demo</title>
+  <style>
+    .outer, .middle, .inner {
+      padding: 20px;
+      margin: 10px;
+      border: 2px solid black;
+    }
+
+    .outer {
+      background-color: #f8d7da;
+    }
+
+    .middle {
+      background-color: #d1ecf1;
+    }
+
+    .inner {
+      background-color: #d4edda;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="outer">
+    Outer Div
+    <button class="outer-btn">Outer Button</button>
+
+    <div class="middle">
+      Middle Div
+      <button class="middle-btn">Middle Button</button>
+
+      <div class="inner">
+        Inner Div
+        <button class="inner-btn">Inner Button</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function addListeners(selector, name) {
+      const el = document.querySelector(selector);
+      const btn = el.querySelector('button');
+
+      // Capturing phase listener
+      el.addEventListener('click', () => {
+        alert(`${name} DIV (capturing)`);
+      }, true);
+
+      // Bubbling phase listener
+      el.addEventListener('click', () => {
+        alert(`${name} DIV (bubbling)`);
+      }, false);
+
+      // Button listener
+      btn.addEventListener('click', (e) => {
+        alert(`${name} BUTTON`);
+        // Stop propagation if it's the inner button
+        if (name === 'Inner') {
+          e.stopPropagation();
+        }
+      });
+    }
+
+    addListeners('.outer', 'Outer');
+    addListeners('.middle', 'Middle');
+    addListeners('.inner', 'Inner');
+  </script>
+
+</body>
+</html>
